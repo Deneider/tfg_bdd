@@ -15,10 +15,10 @@ CREATE TABLE Clientes (
     fecha_nacimiento DATE NOT NULL,
     dni VARCHAR(9) UNIQUE NOT NULL,
     calle VARCHAR(100) NOT NULL,
-    numero_casa VARCHAR(10) NOT NULL, -- Puede ser '12' o '4B'
+    numero_casa INT(10) NOT NULL, -- Puede ser '12' o '4B'
     localidad VARCHAR(50) NOT NULL,
     provincia VARCHAR(50) NOT NULL,
-    cod_postal VARCHAR(10) NOT NULL,
+    cod_postal INT(5) NOT NULL,
     nacionalidad VARCHAR(50) NOT NULL,
     puntos INT DEFAULT 0, -- Sistema de puntos para pagos
     correo VARCHAR(100) UNIQUE NOT NULL,  
@@ -36,7 +36,7 @@ CREATE TABLE Trabajadores (
     numero_casa VARCHAR(10) NOT NULL,
     localidad VARCHAR(50) NOT NULL,
     provincia VARCHAR(50) NOT NULL,
-    cod_postal VARCHAR(10) NOT NULL,
+    cod_postal INT(5) NOT NULL,
     nacionalidad VARCHAR(50) NOT NULL,
     correo VARCHAR(100) UNIQUE NOT NULL,
     contrasena VARCHAR(255) NOT NULL,
