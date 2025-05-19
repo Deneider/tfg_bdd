@@ -1,0 +1,68 @@
+Sentencia crear base de datos
+
+CREAR Base de datos
+
+CREATE DATABASE desubicados;
+USE desubicados;
+
+CREAR TABLAS:
+
+CREATE TABLE Clientes (
+    id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    primer_apellido VARCHAR(50) NOT NULL,
+    segundo_apellido VARCHAR(50),
+    fecha_nacimiento DATE NOT NULL,
+    dni VARCHAR(9) UNIQUE NOT NULL,
+    calle VARCHAR(100) NOT NULL,
+    numero_casa VARCHAR(10) NOT NULL, -- Puede ser '12' o '4B'
+    localidad VARCHAR(50) NOT NULL,
+    provincia VARCHAR(50) NOT NULL,
+    cod_postal VARCHAR(10) NOT NULL,
+    nacionalidad VARCHAR(50) NOT NULL,
+    puntos INT DEFAULT 0, -- Sistema de puntos para pagos
+    correo VARCHAR(100) UNIQUE NOT NULL,  
+    contrasena VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Trabajadores (
+    id_trabajador INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    primer_apellido VARCHAR(50) NOT NULL,
+    segundo_apellido VARCHAR(50),
+    fecha_nacimiento DATE NOT NULL,
+    dni VARCHAR(9) UNIQUE NOT NULL,
+    calle VARCHAR(100) NOT NULL,
+    numero_casa VARCHAR(10) NOT NULL,
+    localidad VARCHAR(50) NOT NULL,
+    provincia VARCHAR(50) NOT NULL,
+    cod_postal VARCHAR(10) NOT NULL,
+    nacionalidad VARCHAR(50) NOT NULL,
+    correo VARCHAR(100) UNIQUE NOT NULL,
+    contrasena VARCHAR(255) NOT NULL,
+    puesto VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Relojes (
+    id_reloj VARCHAR(17) PRIMARY KEY, -- Dirección MAC del reloj (funciona como QR)
+    ip VARCHAR(45) -- Dirección IP del reloj (opcional)
+);
+
+CREATE TABLE Clientes_Relojes (
+    id_cliente INT UNIQUE NOT NULL, -- Un cliente solo puede usar un reloj a la vez
+    id_reloj VARCHAR(17) UNIQUE NOT NULL, -- Un reloj solo puede estar asignado a un cliente a la vez
+    fecha_asignacion DATETIME DEFAULT CURRENT_TIMESTAMP, -- Momento de la asignación
+    FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_reloj) REFERENCES Relojes(id_reloj) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE historial_relojes (
+    id SERIAL PRIMARY KEY,
+    id_cliente INTEGER NOT NULL,
+    id_reloj INTEGER NOT NULL,
+    fecha_asignacion TIMESTAMP NOT NULL,
+    fecha_desasignacion TIMESTAMP,
+    comentario TEXT,
+    FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente),
+    FOREIGN KEY (id_reloj) REFERENCES Relojes(id_reloj)
+);
